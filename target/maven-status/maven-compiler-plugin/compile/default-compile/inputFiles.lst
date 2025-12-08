@@ -2,6 +2,9 @@ C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\com\
 C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\com\mycompany\acessousuario\dao\DatabaseSetup.java
 C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\com\mycompany\acessousuario\dao\UsuarioDAO.java
 C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\com\mycompany\acessousuario\model\Usuario.java
+C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\presenter\CadastroUsuarioPresenter.java
+C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\presenter\LoginPresenter.java
+C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\repository\IUsuarioRepository.java
 C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\view\AlterarSenhaView.java
 C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\view\CadastroUsuarioView.java
 C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\view\ConfiguracaoView.java

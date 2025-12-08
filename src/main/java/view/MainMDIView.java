@@ -4,6 +4,9 @@
  */
 package view;
 
+import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
+
 /**
  *
  * @author marqu
@@ -15,6 +18,8 @@ public class MainMDIView extends javax.swing.JFrame {
      */
     public MainMDIView() {
         initComponents();
+        
+        iniciarSistema();
     }
 
     /**
@@ -224,4 +229,14 @@ public class MainMDIView extends javax.swing.JFrame {
     private javax.swing.JMenuItem saveAsMenuItem;
     // End of variables declaration//GEN-END:variables
 
+    public JDesktopPane getDesktopPane() {
+        return desktopPane;
+    }
+    
+    private void iniciarSistema() {
+        LoginView login = new LoginView(this); 
+        this.desktopPane.add(login);
+        login.setVisible(false); 
+  
+    }
 }
