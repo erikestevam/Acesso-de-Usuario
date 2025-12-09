@@ -1,0 +1,77 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package presenter;
+
+import com.mycompany.acessousuario.model.Usuario;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import repository.IUsuarioRepository;
+import view.AlterarSenhaView;
+
+/**
+ *
+ * @author marqu
+ */
+public class AlterarSenhaPresenter {
+    
+    private final AlterarSenhaView view;
+    private final IUsuarioRepository usuarioRepository;
+    private final Usuario usuarioLogado; // O usuário que está alterando a senha
+
+    public AlterarSenhaPresenter(AlterarSenhaView view, IUsuarioRepository uRepo, Usuario usuarioLogado) {
+        this.view = view;
+        this.usuarioRepository = uRepo;
+        this.usuarioLogado = usuarioLogado;
+        
+        adicionarListeners();
+    }
+
+    private void adicionarListeners() {
+        javax.swing.JButton confirmarBotao = view.getJbConfirmar();
+    
+        // Remover os listenes anterior
+        for (java.awt.event.ActionListener al : confirmarBotao.getActionListeners()) {
+            confirmarBotao.removeActionListener(al);
+        }
+
+        // 2. ADICIONA O NOSSO PRÓPRIO LISTENER (que executa a lógica)
+        confirmarBotao.addActionListener(e -> salvarNovaSenha());
+    }
+    
+    private void salvarNovaSenha() {
+        String novaSenha = view.getNovaSenha().getText();
+        String confirmaSenha = view.getConfNovaSenha().getText();
+        
+        // 1. Validação
+        if (novaSenha.isEmpty() || confirmaSenha.isEmpty()) {
+            JOptionPane.showMessageDialog(view, "Todos os campos de senha são obrigatórios.", "Erro de Validação", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        if (!novaSenha.equals(confirmaSenha)) {
+            JOptionPane.showMessageDialog(view, "A nova senha e a confirmação não coincidem.", "Erro de Validação", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // RNF: A nova senha deve ser diferente da senha anterior? 
+        // Não é um requisito obrigatório, mas é boa prática. Vamos ignorar por agora.
+        
+        try {
+            // 2. Persistência
+            usuarioRepository.atualizarSenha(usuarioLogado.getId(), novaSenha);
+            
+            // 3. Sucesso e Fechamento
+            JOptionPane.showMessageDialog(view, "Senha alterada com sucesso! Você precisará logar novamente.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            view.fechar();
+            
+            // RNF: Aqui você deve invalidar a sessão e forçar o login novamente.
+            // Ex: mainView.abrirLogin();
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(view, "Erro ao salvar a nova senha: " + e.getMessage(), "Erro de Banco", JOptionPane.ERROR_MESSAGE);
+            // Log Falha: "ALTERAR_SENHA"
+        }
+    }
+}

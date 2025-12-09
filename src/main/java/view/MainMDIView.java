@@ -6,6 +6,8 @@ package view;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 /**
  *
@@ -15,11 +17,25 @@ public class MainMDIView extends javax.swing.JFrame {
 
     /**
      * Creates new form MainMDIView
+     * 
      */
-    public MainMDIView() {
+    
+    private static MainMDIView instance;
+    
+    
+    
+    private MainMDIView() {
         initComponents();
         
         iniciarSistema();
+    }
+    
+    public static MainMDIView getInstance(){
+        if(instance == null){
+            instance = new MainMDIView();
+        }
+        
+        return instance;
     }
 
     /**
@@ -32,50 +48,52 @@ public class MainMDIView extends javax.swing.JFrame {
     private void initComponents() {
 
         desktopPane = new javax.swing.JDesktopPane();
+        nomeUsuario = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
-        openMenuItem = new javax.swing.JMenuItem();
-        saveAsMenuItem = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        alterarSenha = new javax.swing.JMenuItem();
+        cadastrarUsuario = new javax.swing.JMenuItem();
+        listarUsuarios = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
-        cutMenuItem = new javax.swing.JMenuItem();
-        copyMenuItem = new javax.swing.JMenuItem();
-        helpMenu = new javax.swing.JMenu();
-        contentMenuItem = new javax.swing.JMenuItem();
+        enviarNotificacao = new javax.swing.JMenuItem();
+        listarNotificacao = new javax.swing.JMenuItem();
+        confgMenu = new javax.swing.JMenu();
+        confg = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        nomeUsuario.setText("Usuario");
+        desktopPane.add(nomeUsuario);
+        nomeUsuario.setBounds(10, 370, 480, 16);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Usuário");
 
-        openMenuItem.setMnemonic('o');
-        openMenuItem.setText("Alterar Senha");
-        openMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        alterarSenha.setText("Alterar Senha");
+        alterarSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openMenuItemActionPerformed(evt);
+                alterarSenhaActionPerformed(evt);
             }
         });
-        fileMenu.add(openMenuItem);
+        fileMenu.add(alterarSenha);
 
-        saveAsMenuItem.setMnemonic('a');
-        saveAsMenuItem.setText("Cadastrar Usuário");
-        saveAsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        cadastrarUsuario.setText("Cadastrar Usuário");
+        cadastrarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveAsMenuItemActionPerformed(evt);
+                cadastrarUsuarioActionPerformed(evt);
             }
         });
-        fileMenu.add(saveAsMenuItem);
+        fileMenu.add(cadastrarUsuario);
 
-        jMenuItem1.setText("Listar Usuários");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        listarUsuarios.setText("Listar Usuários");
+        listarUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                listarUsuariosActionPerformed(evt);
             }
         });
-        fileMenu.add(jMenuItem1);
+        fileMenu.add(listarUsuarios);
 
-        exitMenuItem.setMnemonic('x');
         exitMenuItem.setText("Exit");
         exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,39 +107,36 @@ public class MainMDIView extends javax.swing.JFrame {
         editMenu.setMnemonic('e');
         editMenu.setText("Notificações");
 
-        cutMenuItem.setMnemonic('t');
-        cutMenuItem.setText("Enviar ");
-        cutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        enviarNotificacao.setText("Enviar ");
+        enviarNotificacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cutMenuItemActionPerformed(evt);
+                enviarNotificacaoActionPerformed(evt);
             }
         });
-        editMenu.add(cutMenuItem);
+        editMenu.add(enviarNotificacao);
 
-        copyMenuItem.setMnemonic('y');
-        copyMenuItem.setText("Listar");
-        copyMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        listarNotificacao.setText("Listar");
+        listarNotificacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                copyMenuItemActionPerformed(evt);
+                listarNotificacaoActionPerformed(evt);
             }
         });
-        editMenu.add(copyMenuItem);
+        editMenu.add(listarNotificacao);
 
         menuBar.add(editMenu);
 
-        helpMenu.setMnemonic('h');
-        helpMenu.setText("Configuração");
+        confgMenu.setMnemonic('h');
+        confgMenu.setText("Configuração");
 
-        contentMenuItem.setMnemonic('c');
-        contentMenuItem.setText("Confg.");
-        contentMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        confg.setText("Confg.");
+        confg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                contentMenuItemActionPerformed(evt);
+                confgActionPerformed(evt);
             }
         });
-        helpMenu.add(contentMenuItem);
+        confgMenu.add(confg);
 
-        menuBar.add(helpMenu);
+        menuBar.add(confgMenu);
 
         setJMenuBar(menuBar);
 
@@ -143,41 +158,41 @@ public class MainMDIView extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
-    private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
+    private void alterarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarSenhaActionPerformed
         AlterarSenhaView alt = new AlterarSenhaView();
         desktopPane.add(alt);
         alt.setVisible(true);
-    }//GEN-LAST:event_openMenuItemActionPerformed
+    }//GEN-LAST:event_alterarSenhaActionPerformed
 
-    private void saveAsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsMenuItemActionPerformed
+    private void cadastrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarUsuarioActionPerformed
         CadastroUsuarioView cad = new CadastroUsuarioView();
         desktopPane.add(cad);
         cad.setVisible(true);
-    }//GEN-LAST:event_saveAsMenuItemActionPerformed
+    }//GEN-LAST:event_cadastrarUsuarioActionPerformed
 
-    private void copyMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyMenuItemActionPerformed
+    private void listarNotificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarNotificacaoActionPerformed
         ListarNotificacoesView lNot = new ListarNotificacoesView();
         desktopPane.add(lNot);
         lNot.setVisible(true);
-    }//GEN-LAST:event_copyMenuItemActionPerformed
+    }//GEN-LAST:event_listarNotificacaoActionPerformed
 
-    private void cutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cutMenuItemActionPerformed
+    private void enviarNotificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarNotificacaoActionPerformed
         EnviarNotificacaoView not = new EnviarNotificacaoView();
         desktopPane.add(not);
         not.setVisible(true);
-    }//GEN-LAST:event_cutMenuItemActionPerformed
+    }//GEN-LAST:event_enviarNotificacaoActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void listarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarUsuariosActionPerformed
         ListarUsuariosView list = new ListarUsuariosView();
         desktopPane.add(list);
         list.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_listarUsuariosActionPerformed
 
-    private void contentMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contentMenuItemActionPerformed
+    private void confgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confgActionPerformed
         ConfiguracaoView confg = new ConfiguracaoView();
         desktopPane.add(confg);
         confg.setVisible(true);
-    }//GEN-LAST:event_contentMenuItemActionPerformed
+    }//GEN-LAST:event_confgActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,24 +224,25 @@ public class MainMDIView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainMDIView().setVisible(true);
+                MainMDIView.getInstance().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem contentMenuItem;
-    private javax.swing.JMenuItem copyMenuItem;
-    private javax.swing.JMenuItem cutMenuItem;
+    private javax.swing.JMenuItem alterarSenha;
+    private javax.swing.JMenuItem cadastrarUsuario;
+    private javax.swing.JMenuItem confg;
+    private javax.swing.JMenu confgMenu;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu editMenu;
+    private javax.swing.JMenuItem enviarNotificacao;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
-    private javax.swing.JMenu helpMenu;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem listarNotificacao;
+    private javax.swing.JMenuItem listarUsuarios;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem openMenuItem;
-    private javax.swing.JMenuItem saveAsMenuItem;
+    private javax.swing.JLabel nomeUsuario;
     // End of variables declaration//GEN-END:variables
 
     public JDesktopPane getDesktopPane() {
@@ -236,7 +252,57 @@ public class MainMDIView extends javax.swing.JFrame {
     private void iniciarSistema() {
         LoginView login = new LoginView(this); 
         this.desktopPane.add(login);
-        login.setVisible(false); 
+        login.setVisible(true); 
   
     }
+    
+    public javax.swing.JMenu getFileMenu() {
+        return fileMenu; // Menu "Usuário"
+    }
+
+    public javax.swing.JMenuItem getSaveAsMenuItem() {
+        return cadastrarUsuario; // Item "Cadastrar Usuário"
+    }
+    
+    public void setRodapeInfo(String texto) {
+        nomeUsuario.setText(texto); 
+    }
+
+    public JMenuItem getAlterarSenha() {
+        return alterarSenha;
+    }
+
+    public JMenuItem getCadastrarUsuario() {
+        return cadastrarUsuario;
+    }
+
+    public JMenuItem getConfg() {
+        return confg;
+    }
+
+    public JMenu getConfgMenu() {
+        return confgMenu;
+    }
+
+    public JMenu getEditMenu() {
+        return editMenu;
+    }
+
+    public JMenuItem getEnviarNotificacao() {
+        return enviarNotificacao;
+    }
+
+    public JMenuItem getExitMenuItem() {
+        return exitMenuItem;
+    }
+
+    public JMenuItem getListarNotificacao() {
+        return listarNotificacao;
+    }
+
+    public JMenuItem getListarUsuarios() {
+        return listarUsuarios;
+    }
+    
+    
 }

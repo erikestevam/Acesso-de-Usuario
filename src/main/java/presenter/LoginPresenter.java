@@ -19,12 +19,10 @@ public class LoginPresenter {
     
     private final LoginView view;
     private final IUsuarioRepository repository;
-    private final MainMDIView mdiParent;
     
-    public LoginPresenter(LoginView view, IUsuarioRepository repository, MainMDIView mdiParent){
+    public LoginPresenter(LoginView view, IUsuarioRepository repository){
         this.view = view;
         this.repository = repository;
-        this.mdiParent = mdiParent;
     }
     
     public void verificarEstadoInicial() {
@@ -42,10 +40,14 @@ public class LoginPresenter {
     }
     
     private void abrirCadastroInicial() {
+        
+        MainMDIView mdi = MainMDIView.getInstance();
+        
         CadastroUsuarioView cadastroView = new CadastroUsuarioView();
-        mdiParent.getDesktopPane().add(cadastroView); // Assumindo que sua MDI tem um método getDesktopPane()
+        mdi.getDesktopPane().add(cadastroView); 
         cadastroView.setVisible(true);
         view.fechar();
+        
     }
     
     public void processarLogin(){
@@ -84,7 +86,8 @@ public class LoginPresenter {
     }
     
     private void abrirTelaPrincipal(Usuario usuarioAutenticado) {
-        MainMDIView mainView = new MainMDIView();
+        MainMDIView mainView = MainMDIView.getInstance();
+        new MainMDIViewPresenter(mainView, usuarioAutenticado); 
         mainView.setVisible(true);
     }
 }

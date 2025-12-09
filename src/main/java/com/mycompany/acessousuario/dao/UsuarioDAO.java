@@ -142,4 +142,19 @@ public class UsuarioDAO implements IUsuarioRepository{
             return 0;
         }
     }
+    
+    @Override
+    public void atualizarSenha(int idUsuario, String novaSenha) throws SQLException {
+    
+        String sql = "UPDATE usuarios SET senha = ? WHERE id = ?";
+
+        try (Connection conn = conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, novaSenha);
+            stmt.setInt(2, idUsuario);
+
+            stmt.executeUpdate();
+        }
+    }
 }

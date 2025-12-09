@@ -4,17 +4,26 @@
  */
 package view;
 
+import com.mycompany.acessousuario.dao.NotificacaoDAO;
+import com.mycompany.acessousuario.dao.UsuarioDAO;
+import javax.swing.JTable;
+import presenter.ListarUsuariosPresenter;
+
 /**
  *
  * @author marqu
  */
 public class ListarUsuariosView extends javax.swing.JInternalFrame {
-
-    /**
-     * Creates new form ListarUsuariosView
-     */
+    
+    private final ListarUsuariosPresenter presenter;
+    
     public ListarUsuariosView() {
         initComponents();
+        
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        NotificacaoDAO notificacaoDAO = new NotificacaoDAO();
+        
+        this.presenter = new ListarUsuariosPresenter(this, usuarioDAO, notificacaoDAO);
     }
 
     /**
@@ -27,7 +36,7 @@ public class ListarUsuariosView extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtUsuarios = new javax.swing.JTable();
 
         setClosable(true);
         setIconifiable(true);
@@ -35,7 +44,7 @@ public class ListarUsuariosView extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Usuários");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -58,10 +67,10 @@ public class ListarUsuariosView extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setColumnSelectionAllowed(true);
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jtUsuarios.setColumnSelectionAllowed(true);
+        jtUsuarios.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(jtUsuarios);
+        jtUsuarios.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -86,6 +95,10 @@ public class ListarUsuariosView extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jtUsuarios;
     // End of variables declaration//GEN-END:variables
+    
+    public JTable getJTable(){
+        return jtUsuarios;
+    }
 }
