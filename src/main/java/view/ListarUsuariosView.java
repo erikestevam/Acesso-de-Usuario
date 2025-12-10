@@ -6,7 +6,10 @@ package view;
 
 import com.mycompany.acessousuario.dao.NotificacaoDAO;
 import com.mycompany.acessousuario.dao.UsuarioDAO;
+import com.mycompany.acessousuario.model.Usuario;
+import javax.swing.JButton;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import presenter.ListarUsuariosPresenter;
 
 /**
@@ -17,13 +20,13 @@ public class ListarUsuariosView extends javax.swing.JInternalFrame {
     
     private final ListarUsuariosPresenter presenter;
     
-    public ListarUsuariosView() {
+    public ListarUsuariosView(Usuario usuarioLogado) {
         initComponents();
         
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         NotificacaoDAO notificacaoDAO = new NotificacaoDAO();
         
-        this.presenter = new ListarUsuariosPresenter(this, usuarioDAO, notificacaoDAO);
+        this.presenter = new ListarUsuariosPresenter(this, usuarioDAO, notificacaoDAO, usuarioLogado);
     }
 
     /**
@@ -37,6 +40,9 @@ public class ListarUsuariosView extends javax.swing.JInternalFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jtUsuarios = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        usuarioEditar = new javax.swing.JTextField();
+        jbEditar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -72,6 +78,10 @@ public class ListarUsuariosView extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jtUsuarios);
         jtUsuarios.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
+        jLabel1.setText("Nome do Usuário:");
+
+        jbEditar.setText("Editar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -80,13 +90,28 @@ public class ListarUsuariosView extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(usuarioEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbEditar)))
+                .addGap(150, 150, 150))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(usuarioEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbEditar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -94,11 +119,26 @@ public class ListarUsuariosView extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbEditar;
     private javax.swing.JTable jtUsuarios;
+    private javax.swing.JTextField usuarioEditar;
     // End of variables declaration//GEN-END:variables
     
     public JTable getJTable(){
         return jtUsuarios;
+    }
+
+    public JButton getJbEditar() {
+        return jbEditar;
+    }
+
+    public JTextField getUsuarioEditar() {
+        return usuarioEditar;
+    }
+    
+    public void exibirMensagem(String mensagem){
+        javax.swing.JOptionPane.showMessageDialog(this, mensagem);
     }
 }

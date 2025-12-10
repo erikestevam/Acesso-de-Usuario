@@ -5,6 +5,7 @@ C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\com\
 C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\com\mycompany\acessousuario\model\Usuario.java
 C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\presenter\AlterarSenhaPresenter.java
 C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\presenter\CadastroUsuarioPresenter.java
+C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\presenter\EditarUsuarioPresenter.java
 C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\presenter\ListarUsuariosPresenter.java
 C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\presenter\LoginPresenter.java
 C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\presenter\MainMDIViewPresenter.java
@@ -13,6 +14,7 @@ C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\repo
 C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\view\AlterarSenhaView.java
 C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\view\CadastroUsuarioView.java
 C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\view\ConfiguracaoView.java
+C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\view\EditarUsuarioView.java
 C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\view\EnviarNotificacaoView.java
 C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\view\ListarNotificacoesView.java
 C:\Users\marqu\OneDrive\Documentos\Projetos\Acesso-de-Usuario\src\main\java\view\ListarUsuariosView.java

@@ -1,5 +1,7 @@
 view\MainMDIView$7.class
+view\EditarUsuarioView.class
 view\CadastroUsuarioView.class
+presenter\EditarUsuarioPresenter.class
 view\MainMDIView$4.class
 view\CadastroUsuarioView$1.class
 presenter\ListarUsuariosPresenter.class
@@ -19,6 +21,7 @@ view\ListarUsuariosView.class
 repository\IUsuarioRepository.class
 view\EnviarNotificacaoView.class
 view\MainMDIView$3.class
+view\EditarUsuarioView$1.class
 view\MainMDIView$8.class
 view\AlterarSenhaView$1.class
 view\LoginView.class

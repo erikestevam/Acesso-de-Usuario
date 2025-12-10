@@ -159,39 +159,28 @@ public class MainMDIView extends javax.swing.JFrame {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void alterarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarSenhaActionPerformed
-        AlterarSenhaView alt = new AlterarSenhaView();
-        desktopPane.add(alt);
-        alt.setVisible(true);
+
     }//GEN-LAST:event_alterarSenhaActionPerformed
 
     private void cadastrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarUsuarioActionPerformed
-        CadastroUsuarioView cad = new CadastroUsuarioView();
-        desktopPane.add(cad);
-        cad.setVisible(true);
+  
+        
     }//GEN-LAST:event_cadastrarUsuarioActionPerformed
 
     private void listarNotificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarNotificacaoActionPerformed
-        ListarNotificacoesView lNot = new ListarNotificacoesView();
-        desktopPane.add(lNot);
-        lNot.setVisible(true);
+  
     }//GEN-LAST:event_listarNotificacaoActionPerformed
 
     private void enviarNotificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarNotificacaoActionPerformed
-        EnviarNotificacaoView not = new EnviarNotificacaoView();
-        desktopPane.add(not);
-        not.setVisible(true);
+
     }//GEN-LAST:event_enviarNotificacaoActionPerformed
 
     private void listarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarUsuariosActionPerformed
-        ListarUsuariosView list = new ListarUsuariosView();
-        desktopPane.add(list);
-        list.setVisible(true);
+
     }//GEN-LAST:event_listarUsuariosActionPerformed
 
     private void confgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confgActionPerformed
-        ConfiguracaoView confg = new ConfiguracaoView();
-        desktopPane.add(confg);
-        confg.setVisible(true);
+ 
     }//GEN-LAST:event_confgActionPerformed
 
     /**

@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import repository.IUsuarioRepository;
 
 public class UsuarioDAO implements IUsuarioRepository{
@@ -153,6 +155,62 @@ public class UsuarioDAO implements IUsuarioRepository{
 
             stmt.setString(1, novaSenha);
             stmt.setInt(2, idUsuario);
+
+            stmt.executeUpdate();
+        }
+    }
+    
+    @Override
+    public Usuario buscarPorLogin(String login) throws SQLException {
+        String sql = "SELECT * FROM usuarios WHERE login = ?";
+
+        Usuario usuario = null;
+        
+        try (Connection conn = conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            // Define o parâmetro da query (o login)
+            stmt.setString(1, login);
+            
+            try (ResultSet rs = stmt.executeQuery()) {
+                
+                // Verifica se encontrou alguma linha
+                if (rs.next()) {
+                    usuario = new Usuario();
+                    
+                    usuario.setId(rs.getInt("id"));
+                    usuario.setNome(rs.getString("nome"));
+                    usuario.setLogin(rs.getString("login"));
+                    usuario.setSenha(rs.getString("senha"));
+                    usuario.setEmail(rs.getString("email"));
+                    usuario.setTipo(rs.getString("tipo"));
+                    usuario.setData_criacao(rs.getString("data_criacao"));
+                    
+                    int ativoDB = rs.getInt("ativo");
+                    usuario.setAtivo(ativoDB == 1); 
+                }
+            }
+            
+        } catch (SQLException e) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, e);
+            throw e;
+        }
+        
+        return usuario;
+    }
+    
+    public void atualizarUsuario(Usuario u) throws SQLException {
+        String sql = "UPDATE usuarios SET login = ?, senha = ?, tipo = ?, ativo = ? WHERE id = ?";
+
+        try (Connection conn = conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, u.getLogin());
+            stmt.setString(2, u.getSenha());
+            stmt.setString(3, u.getTipo());
+            stmt.setInt(4, u.isAtivo() ? 1 : 0);
+
+            stmt.setInt(5, u.getId());
 
             stmt.executeUpdate();
         }
