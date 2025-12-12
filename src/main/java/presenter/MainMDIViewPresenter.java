@@ -64,7 +64,7 @@ public class MainMDIViewPresenter {
         controleView.setVisible(true);
         controleView.setLocation(50, 50);
     }
-
+    
     private void configurarInterface() {
         // Configura Rodapé
         String info = String.format("Usuário: %s | Perfil: %s", 
