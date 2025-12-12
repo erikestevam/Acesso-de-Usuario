@@ -88,14 +88,14 @@
         <Property name="text" type="java.lang.String" value="Senha:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="tfSenha">
+    <Component class="javax.swing.JPasswordField" name="tfSenha">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
         <Property name="text" type="java.lang.String" value="Confirmar senha:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="tfConfirmaSenha">
+    <Component class="javax.swing.JPasswordField" name="tfConfirmaSenha">
     </Component>
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>

@@ -5,8 +5,6 @@
 package view;
 
 import javax.swing.JButton;
-import javax.swing.JTextField;
-// import presenter.AlterarSenhaPresenter; // Não usado diretamente nesta view
 
 /**
  *
@@ -31,12 +29,12 @@ public class AlterarSenhaView extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        novaSenha = new javax.swing.JTextField();
+        novaSenha = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
-        confNovaSenha = new javax.swing.JTextField();
+        confNovaSenha = new javax.swing.JPasswordField();
         jbConfirmar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        senhaAtual = new javax.swing.JTextField();
+        senhaAtual = new javax.swing.JPasswordField();
 
         setClosable(true);
         setIconifiable(true);
@@ -112,28 +110,28 @@ public class AlterarSenhaView extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField confNovaSenha;
+    private javax.swing.JPasswordField confNovaSenha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JButton jbConfirmar;
-    private javax.swing.JTextField novaSenha;
-    private javax.swing.JTextField senhaAtual;
+    private javax.swing.JPasswordField novaSenha;
+    private javax.swing.JPasswordField senhaAtual;
     // End of variables declaration//GEN-END:variables
 
     public JButton getJbConfirmar() {
         return jbConfirmar;
     }
 
-    public JTextField getNovaSenha() {
+    public javax.swing.JPasswordField getNovaSenha() {
         return novaSenha;
     }
 
-    public JTextField getSenhaAtual() {
+    public javax.swing.JPasswordField getSenhaAtual() {
         return senhaAtual;
     }
 
-    public JTextField getConfNovaSenha() {
+    public javax.swing.JPasswordField getConfNovaSenha() {
         return confNovaSenha;
     }
 

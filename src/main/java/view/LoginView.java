@@ -34,7 +34,7 @@ public class LoginView extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         tfUsuario = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        tfSenha = new javax.swing.JTextField();
+        tfSenha = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
 
         setClosable(true);
@@ -102,7 +102,7 @@ public class LoginView extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField tfSenha;
+    private javax.swing.JPasswordField tfSenha;
     private javax.swing.JTextField tfUsuario;
     // End of variables declaration//GEN-END:variables
 
@@ -111,7 +111,7 @@ public class LoginView extends javax.swing.JInternalFrame {
     }
     
     public String getSenha(){
-        return tfSenha.getText();
+        return new String(tfSenha.getPassword());
     }
     
     public void exibirMensagem(String mensagem){

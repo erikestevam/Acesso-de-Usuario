@@ -44,8 +44,8 @@ public class AlterarSenhaPresenter {
     }
     
     private void salvarNovaSenha() {
-        String novaSenha = view.getNovaSenha().getText();
-        String confirmaSenha = view.getConfNovaSenha().getText();
+        String novaSenha = new String(view.getNovaSenha().getPassword());
+        String confirmaSenha = new String(view.getConfNovaSenha().getPassword());
         
         // 1. Validação
         if (novaSenha.isEmpty() || confirmaSenha.isEmpty()) {

@@ -1,7 +1,6 @@
 package com.mycompany.acessousuario.dao;
 
 import com.mycompany.acessousuario.model.Usuario;
-import com.mycompany.acessousuario.util.PasswordHasher;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -70,9 +69,7 @@ public class UsuarioDAO implements IUsuarioRepository{
             
             stmt.setString(1, u.getNome());
             stmt.setString(2, u.getLogin());
-            // Hash da senha antes de atualizar (se a senha foi alterada)
-            String senhaHash = u.getSenha().startsWith("$2a$") ? u.getSenha() : PasswordHasher.hash(u.getSenha());
-            stmt.setString(3, senhaHash);
+            stmt.setString(3, u.getSenha());
             stmt.setString(4, u.getEmail());
             stmt.setString(5, u.getTipo());
             stmt.setString(6, u.getData_criacao());
@@ -95,38 +92,25 @@ public class UsuarioDAO implements IUsuarioRepository{
 
     @Override
     public Usuario autenticar(String login, String senha) throws SQLException {
-        String sql = "SELECT * FROM usuarios WHERE login = ?";
+        String sql = "SELECT * FROM usuarios WHERE login = ? AND senha = ?";
         try (Connection conn = conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, login);
+            stmt.setString(2, senha);
             
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    String hashArmazenado = rs.getString("senha");
+                    Usuario u = new Usuario();
+                    u.setId(rs.getInt("id"));
+                    u.setNome(rs.getString("nome"));
+                    u.setLogin(rs.getString("login"));
+                    u.setSenha(rs.getString("senha"));
+                    u.setEmail(rs.getString("email"));
+                    u.setTipo(rs.getString("tipo"));
+                    u.setData_criacao(rs.getString("data_criacao"));
+                    u.setAtivo(rs.getBoolean("ativo"));
                     
-                    // Verificar se a senha corresponde ao hash
-                    // Se o hash não começa com $2a$, é senha antiga em texto plano (migração)
-                    boolean senhaValida;
-                    if (hashArmazenado != null && hashArmazenado.startsWith("$2a$")) {
-                        senhaValida = PasswordHasher.verificar(senha, hashArmazenado);
-                    } else {
-                        // Compatibilidade com senhas antigas em texto plano
-                        senhaValida = senha.equals(hashArmazenado);
-                    }
-                    
-                    if (senhaValida) {
-                        Usuario u = new Usuario();
-                        u.setId(rs.getInt("id"));
-                        u.setNome(rs.getString("nome"));
-                        u.setLogin(rs.getString("login"));
-                        u.setSenha(rs.getString("senha"));
-                        u.setEmail(rs.getString("email"));
-                        u.setTipo(rs.getString("tipo"));
-                        u.setData_criacao(rs.getString("data_criacao"));
-                        u.setAtivo(rs.getBoolean("ativo"));
-                        
-                        return u;
-                    }
+                    return u;
                 }
             }
         }
@@ -166,9 +150,7 @@ public class UsuarioDAO implements IUsuarioRepository{
         try (Connection conn = conectar();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
             
-            // Hash da nova senha antes de atualizar
-            String senhaHash = PasswordHasher.hash(novaSenha);
-            stmt.setString(1, senhaHash);
+            stmt.setString(1, novaSenha);
             stmt.setInt(2, idUsuario);
 
             stmt.executeUpdate();

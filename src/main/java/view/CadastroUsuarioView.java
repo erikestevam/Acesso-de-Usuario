@@ -32,9 +32,9 @@ public class CadastroUsuarioView extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         tfUsuario = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        tfSenha = new javax.swing.JTextField();
+        tfSenha = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
-        tfConfirmaSenha = new javax.swing.JTextField();
+        tfConfirmaSenha = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
 
         setClosable(true);
@@ -113,8 +113,8 @@ public class CadastroUsuarioView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField tfConfirmaSenha;
-    private javax.swing.JTextField tfSenha;
+    private javax.swing.JPasswordField tfConfirmaSenha;
+    private javax.swing.JPasswordField tfSenha;
     private javax.swing.JTextField tfUsuario;
     // End of variables declaration//GEN-END:variables
     
@@ -123,11 +123,11 @@ public class CadastroUsuarioView extends javax.swing.JInternalFrame {
     }
     
     public String getSenha(){
-        return tfSenha.getText();
+        return new String(tfSenha.getPassword());
     }
     
     public String getConfirmaSenha(){
-        return tfConfirmaSenha.getText();
+        return new String(tfConfirmaSenha.getPassword());
     }
     public void exibirMensagem(String mensagem) {
     javax.swing.JOptionPane.showMessageDialog(this, mensagem);

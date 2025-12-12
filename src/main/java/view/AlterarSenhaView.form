@@ -85,14 +85,14 @@
         <Property name="text" type="java.lang.String" value="Nova Senha:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="novaSenha">
+    <Component class="javax.swing.JPasswordField" name="novaSenha">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
         <Property name="text" type="java.lang.String" value="Confirme a senha:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="confNovaSenha">
+    <Component class="javax.swing.JPasswordField" name="confNovaSenha">
     </Component>
     <Component class="javax.swing.JButton" name="jbConfirmar">
       <Properties>
@@ -107,7 +107,7 @@
         <Property name="text" type="java.lang.String" value="Senha Atual:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="senhaAtual">
+    <Component class="javax.swing.JPasswordField" name="senhaAtual">
     </Component>
   </SubComponents>
 </Form>
