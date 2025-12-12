@@ -4,10 +4,10 @@
  */
 package view;
 
-import com.mycompany.acessousuario.dao.NotificacaoDAO;
-import com.mycompany.acessousuario.dao.UsuarioDAO;
 import javax.swing.JTable;
 import presenter.ListarUsuariosPresenter;
+import repository.IUsuarioRepository;
+import repository.INotificacaoRepository;
 
 /**
  *
@@ -17,13 +17,11 @@ public class ListarUsuariosView extends javax.swing.JInternalFrame {
     
     private final ListarUsuariosPresenter presenter;
     
-    public ListarUsuariosView() {
+    public ListarUsuariosView(IUsuarioRepository usuarioRepository,
+                              INotificacaoRepository notificacaoRepository) {
         initComponents();
         
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
-        NotificacaoDAO notificacaoDAO = new NotificacaoDAO();
-        
-        this.presenter = new ListarUsuariosPresenter(this, usuarioDAO, notificacaoDAO);
+        this.presenter = new ListarUsuariosPresenter(this, usuarioRepository, notificacaoRepository);
     }
 
     /**

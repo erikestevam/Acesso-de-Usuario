@@ -12,7 +12,7 @@ import repository.IUsuarioRepository;
 
 public class UsuarioDAO implements IUsuarioRepository{
 
-    private static final String DB_URL = "jdbc:sqlite:usuarios_teste.db";
+    private static final String DB_URL = "jdbc:sqlite:usuarios.db";
 
     private Connection conectar() throws SQLException {
         return DriverManager.getConnection(DB_URL);
@@ -156,5 +156,31 @@ public class UsuarioDAO implements IUsuarioRepository{
 
             stmt.executeUpdate();
         }
+    }
+    
+    @Override
+    public Usuario buscarPorId(int id) throws SQLException {
+        String sql = "SELECT * FROM usuarios WHERE id = ?";
+        try (Connection conn = conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Usuario u = new Usuario();
+                    u.setId(rs.getInt("id"));
+                    u.setNome(rs.getString("nome"));
+                    u.setLogin(rs.getString("login"));
+                    u.setSenha(rs.getString("senha"));
+                    u.setEmail(rs.getString("email"));
+                    u.setTipo(rs.getString("tipo"));
+                    u.setData_criacao(rs.getString("data_criacao"));
+                    u.setAtivo(rs.getBoolean("ativo"));
+                    
+                    return u;
+                }
+            }
+        }
+        return null;
     }
 }

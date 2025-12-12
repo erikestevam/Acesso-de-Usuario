@@ -22,4 +22,5 @@ public interface IUsuarioRepository {
     boolean verificarLoginExistente(String login) throws SQLException;
     int contarUsuarios() throws SQLException;
     public void atualizarSenha(int idUsuario, String novaSenha) throws SQLException;
+    Usuario buscarPorId(int id) throws SQLException;
 }

@@ -17,7 +17,7 @@ import repository.INotificacaoRepository;
  */
 public class NotificacaoDAO implements INotificacaoRepository{
     
-    private static final String DB_URL = "jdbc:sqlite:usuarios_teste.db";
+    private static final String DB_URL = "jdbc:sqlite:usuarios.db";
     
     private Connection conectar() throws SQLException {
         // Método de conexão direta (sem precisar de uma classe Conexao separada)

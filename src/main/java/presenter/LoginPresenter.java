@@ -7,7 +7,6 @@ package presenter;
 import com.mycompany.acessousuario.model.Usuario;
 import java.sql.SQLException;
 import repository.IUsuarioRepository;
-import view.CadastroUsuarioView;
 import view.LoginView;
 import view.MainMDIView;
 
@@ -26,28 +25,8 @@ public class LoginPresenter {
     }
     
     public void verificarEstadoInicial() {
-        try {
-            int totalUsuarios = repository.contarUsuarios();
-            
-            if (totalUsuarios == 0) {
-                view.exibirMensagem("Primeiro acesso ao sistema! Você deve realizar o cadastro inicial de Administrador.");
-                abrirCadastroInicial(); 
-            } 
-            
-        } catch (SQLException e) {
-            view.exibirMensagem("Erro crítico ao verificar o estado inicial do sistema.");
-        }
-    }
-    
-    private void abrirCadastroInicial() {
-        
-        MainMDIView mdi = MainMDIView.getInstance();
-        
-        CadastroUsuarioView cadastroView = new CadastroUsuarioView();
-        mdi.getDesktopPane().add(cadastroView); 
-        cadastroView.setVisible(true);
-        view.fechar();
-        
+        // Método mantido para compatibilidade, mas não faz nada
+        // O LoginView já é aberto diretamente no MainMDIView
     }
     
     public void processarLogin(){
@@ -87,7 +66,11 @@ public class LoginPresenter {
     
     private void abrirTelaPrincipal(Usuario usuarioAutenticado) {
         MainMDIView mainView = MainMDIView.getInstance();
-        new MainMDIViewPresenter(mainView, usuarioAutenticado); 
+        new MainMDIViewPresenter(mainView, usuarioAutenticado, repository); 
         mainView.setVisible(true);
+        
+        // Mostrar item de deslogar e esconder "Fazer Login" após login bem-sucedido
+        mainView.getDeslogarMenuItem().setVisible(true);
+        mainView.getFazerLoginMenuItem().setVisible(false);
     }
 }

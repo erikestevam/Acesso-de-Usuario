@@ -4,7 +4,9 @@
  */
 package presenter;
 
+import com.mycompany.acessousuario.log.LogManager;
 import com.mycompany.acessousuario.model.Usuario;
+import com.pss.senha.validacao.ValidadorSenha;
 import java.sql.SQLException;
 import java.util.List;
 import repository.IUsuarioRepository;
@@ -39,6 +41,17 @@ public class CadastroUsuarioPresenter {
             view.exibirMensagem("A senha e a confirmação de senha não coincidem.");
             return;
         }
+
+        // validação de senha com biblioteca externa
+        ValidadorSenha validadorSenha = new ValidadorSenha();
+        List<String> errosSenha = validadorSenha.validar(senha);
+        if(!errosSenha.isEmpty()){
+            String errosFormatados = String.join("\n", errosSenha);
+            view.exibirMensagem("Senha inválida:\n" + errosFormatados);
+            return;
+        } else {
+            view.exibirMensagem("Senha validada com sucesso.");
+        }
         
         try{
             //verificar se o login ja existe
@@ -68,9 +81,20 @@ public class CadastroUsuarioPresenter {
             
             repository.salvar(novoUsuario);
             
+            // Log de sucesso
+            String usuarioLog = usuarioExistentes.isEmpty() ? "SISTEMA" : "NOVO_USUARIO";
+            LogManager.getInstance().logarOperacao("INCLUSAO_USUARIO", novoUsuario.getNome(), usuarioLog);
+            
             view.limparCampos();
             
         }catch (SQLException e) {
+            // Log de falha
+            String usuarioLog = "SISTEMA";
+            try {
+                List<Usuario> usuarioExistentes = repository.listarTodos();
+                usuarioLog = usuarioExistentes.isEmpty() ? "SISTEMA" : "NOVO_USUARIO";
+            } catch (SQLException ex) {}
+            LogManager.getInstance().logarFalha("INCLUSAO_USUARIO", login, e.getMessage(), usuarioLog);
             view.exibirMensagem("Erro ao salvar no banco de dados: " + e.getMessage());
         }
     }

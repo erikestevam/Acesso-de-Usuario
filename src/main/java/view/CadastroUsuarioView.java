@@ -4,7 +4,6 @@
  */
 package view;
 
-import com.mycompany.acessousuario.dao.UsuarioDAO;
 import presenter.CadastroUsuarioPresenter;
 import repository.IUsuarioRepository;
 
@@ -15,12 +14,9 @@ import repository.IUsuarioRepository;
 public class CadastroUsuarioView extends javax.swing.JInternalFrame {
 
     private final CadastroUsuarioPresenter presenter;
-    
-    
-    public CadastroUsuarioView() {
-        initComponents();
         
-        IUsuarioRepository repository = new UsuarioDAO();
+    public CadastroUsuarioView(IUsuarioRepository repository) {
+        initComponents();
         this.presenter = new CadastroUsuarioPresenter(this, repository);
     }
 

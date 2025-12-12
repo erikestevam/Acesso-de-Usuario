@@ -5,9 +5,12 @@
 package view;
 
 import javax.swing.JDesktopPane;
-import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import repository.IUsuarioRepository;
+import repository.INotificacaoRepository;
+import com.mycompany.acessousuario.dao.UsuarioDAO;
+import com.mycompany.acessousuario.dao.NotificacaoDAO;
 
 /**
  *
@@ -22,11 +25,13 @@ public class MainMDIView extends javax.swing.JFrame {
     
     private static MainMDIView instance;
     
-    
+    private final IUsuarioRepository usuarioRepository;
+    private final INotificacaoRepository notificacaoRepository;
     
     private MainMDIView() {
         initComponents();
-        
+        this.usuarioRepository = new UsuarioDAO();
+        this.notificacaoRepository = new NotificacaoDAO();
         iniciarSistema();
     }
     
@@ -51,9 +56,12 @@ public class MainMDIView extends javax.swing.JFrame {
         nomeUsuario = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
         alterarSenha = new javax.swing.JMenuItem();
         cadastrarUsuario = new javax.swing.JMenuItem();
         listarUsuarios = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         enviarNotificacao = new javax.swing.JMenuItem();
@@ -70,6 +78,15 @@ public class MainMDIView extends javax.swing.JFrame {
         fileMenu.setMnemonic('f');
         fileMenu.setText("Usuário");
 
+        jMenuItem2.setText("Fazer Login");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        fileMenu.add(jMenuItem2);
+
+        alterarSenha.setMnemonic('o');
         alterarSenha.setText("Alterar Senha");
         alterarSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,6 +95,7 @@ public class MainMDIView extends javax.swing.JFrame {
         });
         fileMenu.add(alterarSenha);
 
+        cadastrarUsuario.setMnemonic('a');
         cadastrarUsuario.setText("Cadastrar Usuário");
         cadastrarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,6 +112,19 @@ public class MainMDIView extends javax.swing.JFrame {
         });
         fileMenu.add(listarUsuarios);
 
+        jMenuItem3.setText("Controle de Usuarios");
+        // O listener será configurado pelo MainMDIViewPresenter quando o usuário fizer login
+        fileMenu.add(jMenuItem3);
+
+        jMenuItem1.setText("Deslogar");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        fileMenu.add(jMenuItem1);
+
+        exitMenuItem.setMnemonic('x');
         exitMenuItem.setText("Exit");
         exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,6 +138,7 @@ public class MainMDIView extends javax.swing.JFrame {
         editMenu.setMnemonic('e');
         editMenu.setText("Notificações");
 
+        enviarNotificacao.setMnemonic('t');
         enviarNotificacao.setText("Enviar ");
         enviarNotificacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,6 +147,7 @@ public class MainMDIView extends javax.swing.JFrame {
         });
         editMenu.add(enviarNotificacao);
 
+        listarNotificacao.setMnemonic('y');
         listarNotificacao.setText("Listar");
         listarNotificacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,6 +161,7 @@ public class MainMDIView extends javax.swing.JFrame {
         confgMenu.setMnemonic('h');
         confgMenu.setText("Configuração");
 
+        confg.setMnemonic('c');
         confg.setText("Confg.");
         confg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -165,7 +199,7 @@ public class MainMDIView extends javax.swing.JFrame {
     }//GEN-LAST:event_alterarSenhaActionPerformed
 
     private void cadastrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarUsuarioActionPerformed
-        CadastroUsuarioView cad = new CadastroUsuarioView();
+        CadastroUsuarioView cad = new CadastroUsuarioView(usuarioRepository);
         desktopPane.add(cad);
         cad.setVisible(true);
     }//GEN-LAST:event_cadastrarUsuarioActionPerformed
@@ -183,7 +217,10 @@ public class MainMDIView extends javax.swing.JFrame {
     }//GEN-LAST:event_enviarNotificacaoActionPerformed
 
     private void listarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarUsuariosActionPerformed
-        ListarUsuariosView list = new ListarUsuariosView();
+        // Abrir ControleUsuariosView ao invés de ListarUsuariosView
+        // Nota: precisa do usuário autenticado, então será gerenciado pelo presenter
+        // Por enquanto mantém ListarUsuariosView para compatibilidade
+        ListarUsuariosView list = new ListarUsuariosView(usuarioRepository, notificacaoRepository);
         desktopPane.add(list);
         list.setVisible(true);
     }//GEN-LAST:event_listarUsuariosActionPerformed
@@ -193,6 +230,55 @@ public class MainMDIView extends javax.swing.JFrame {
         desktopPane.add(confg);
         confg.setVisible(true);
     }//GEN-LAST:event_confgActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        abrirLoginView();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    
+    
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        deslogar();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    
+    private void abrirLoginView() {
+        // Verificar se já existe uma LoginView aberta
+        javax.swing.JInternalFrame[] frames = desktopPane.getAllFrames();
+        for (javax.swing.JInternalFrame frame : frames) {
+            if (frame instanceof LoginView) {
+                frame.toFront();
+                try {
+                    frame.setSelected(true);
+                } catch (java.beans.PropertyVetoException e) {
+                    // Ignorar se não puder selecionar
+                }
+                return;
+            }
+        }
+        
+        // Criar nova LoginView se não existir
+        LoginView login = new LoginView(this, usuarioRepository);
+        desktopPane.add(login);
+        login.setVisible(true);
+        login.setLocation(100, 100); // Centralizar dentro do MDI
+    }
+    
+    private void deslogar() {
+        // Fechar todas as janelas internas abertas
+        javax.swing.JInternalFrame[] frames = desktopPane.getAllFrames();
+        for (javax.swing.JInternalFrame frame : frames) {
+            frame.dispose();
+        }
+        
+        // Limpar rodapé
+        nomeUsuario.setText("Usuario");
+        
+        // Mostrar LoginView
+        abrirLoginView();
+        
+        // Esconder item de deslogar e mostrar "Fazer Login"
+        jMenuItem1.setVisible(false);
+        jMenuItem2.setVisible(true);
+    }
 
     /**
      * @param args the command line arguments
@@ -239,6 +325,9 @@ public class MainMDIView extends javax.swing.JFrame {
     private javax.swing.JMenuItem enviarNotificacao;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem listarNotificacao;
     private javax.swing.JMenuItem listarUsuarios;
     private javax.swing.JMenuBar menuBar;
@@ -250,7 +339,13 @@ public class MainMDIView extends javax.swing.JFrame {
     }
     
     private void iniciarSistema() {
-        LoginView login = new LoginView(this); 
+        // Esconder deslogar e mostrar "Fazer Login" inicialmente (antes do login)
+        jMenuItem1.setVisible(false);
+        jMenuItem2.setVisible(true);
+        // Esconder "Controle de Usuarios" inicialmente (só aparece quando logado como admin)
+        jMenuItem3.setVisible(false);
+        
+        LoginView login = new LoginView(this, usuarioRepository); 
         this.desktopPane.add(login);
         login.setVisible(true); 
   
@@ -302,6 +397,18 @@ public class MainMDIView extends javax.swing.JFrame {
 
     public JMenuItem getListarUsuarios() {
         return listarUsuarios;
+    }
+    
+    public JMenuItem getDeslogarMenuItem() {
+        return jMenuItem1;
+    }
+    
+    public JMenuItem getFazerLoginMenuItem() {
+        return jMenuItem2;
+    }
+    
+    public JMenuItem getControleUsuariosMenuItem() {
+        return jMenuItem3;
     }
     
     

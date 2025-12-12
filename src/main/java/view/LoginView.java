@@ -4,7 +4,6 @@
  */
 package view;
 
-import com.mycompany.acessousuario.dao.UsuarioDAO;
 import presenter.LoginPresenter;
 import repository.IUsuarioRepository;
 
@@ -15,14 +14,10 @@ import repository.IUsuarioRepository;
 public class LoginView extends javax.swing.JInternalFrame {
 
    private final LoginPresenter presenter;
-   private final MainMDIView mdiParent;
     
-    public LoginView(MainMDIView mdiParent) {
+    public LoginView(MainMDIView mdiParent, IUsuarioRepository repository) {
         initComponents();
         
-        this.mdiParent = mdiParent;
-        
-        IUsuarioRepository repository = new UsuarioDAO();
         this.presenter = new LoginPresenter(this, repository);
         this.presenter.verificarEstadoInicial();
     }

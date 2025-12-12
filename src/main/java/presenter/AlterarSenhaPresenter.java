@@ -4,6 +4,7 @@
  */
 package presenter;
 
+import com.mycompany.acessousuario.log.LogManager;
 import com.mycompany.acessousuario.model.Usuario;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -62,7 +63,10 @@ public class AlterarSenhaPresenter {
             // 2. Persistência
             usuarioRepository.atualizarSenha(usuarioLogado.getId(), novaSenha);
             
-            // 3. Sucesso e Fechamento
+            // 3. Log de sucesso
+            LogManager.getInstance().logarOperacao("ALTERACAO_SENHA", usuarioLogado.getNome(), usuarioLogado.getLogin());
+            
+            // 4. Sucesso e Fechamento
             JOptionPane.showMessageDialog(view, "Senha alterada com sucesso! Você precisará logar novamente.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             view.fechar();
             
@@ -70,8 +74,9 @@ public class AlterarSenhaPresenter {
             // Ex: mainView.abrirLogin();
             
         } catch (SQLException e) {
+            // Log de falha
+            LogManager.getInstance().logarFalha("ALTERACAO_SENHA", usuarioLogado.getNome(), e.getMessage(), usuarioLogado.getLogin());
             JOptionPane.showMessageDialog(view, "Erro ao salvar a nova senha: " + e.getMessage(), "Erro de Banco", JOptionPane.ERROR_MESSAGE);
-            // Log Falha: "ALTERAR_SENHA"
         }
     }
 }
