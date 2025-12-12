@@ -134,8 +134,8 @@ public class CadastroUsuarioView extends javax.swing.JInternalFrame {
     }
     
     public void limparCampos(){
-        tfUsuario.setText(" ");
-        tfSenha.setText(" ");
-        tfConfirmaSenha.setText(" ");
+        tfUsuario.setText("");
+        tfSenha.setText("");
+        tfConfirmaSenha.setText("");
     }
 }

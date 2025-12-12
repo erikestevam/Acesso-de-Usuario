@@ -10,6 +10,8 @@ import repository.IUsuarioRepository;
 import repository.INotificacaoRepository;
 import view.AlterarSenhaView;
 import view.ControleUsuariosView;
+import view.EnviarNotificacaoView;
+import view.ListarNotificacoesView;
 import view.MainMDIView;
 import com.mycompany.acessousuario.dao.NotificacaoDAO;
 
@@ -38,6 +40,12 @@ public class MainMDIViewPresenter {
     private void configurarAcoesMenu() {
         // Configurar ação do menu "Controle de Usuarios" para abrir ControleUsuariosView
         view.getControleUsuariosMenuItem().addActionListener(e -> abrirControleUsuarios());
+        // Configurar ação do menu "Enviar Notificação" para abrir EnviarNotificacaoView
+        view.getEnviarNotificacao().addActionListener(e -> abrirEnviarNotificacao());
+        // Configurar ação do menu "Listar Notificações" para abrir ListarNotificacoesView
+        view.getListarNotificacao().addActionListener(e -> abrirListarNotificacoes());
+        // Configurar ação do menu "Alterar Senha" para abrir AlterarSenhaView
+        view.getAlterarSenha().addActionListener(e -> abrirAlterarSenha());
     }
     
     private void abrirControleUsuarios() {
@@ -72,8 +80,16 @@ public class MainMDIViewPresenter {
                                     usuarioAutenticado.getTipo());
         view.setRodapeInfo(info);
         
+        // Configurar botão de notificações
+        atualizarContadorNotificacoes();
+        view.getBtnNotificacoes().addActionListener(e -> abrirListarNotificacoes());
+        
         // Configura Menus e Acessos
         JMenuItem cadastrarUsuarioItem = view.getSaveAsMenuItem();
+        
+        // Mostrar "Alterar Senha" e "Listar Notificações" para todos os usuários logados
+        view.getAlterarSenha().setVisible(true);
+        view.getListarNotificacao().setVisible(true);
         
         if (usuarioAutenticado.getTipo().equals("Administrador") || usuarioAutenticado.getTipo().equals("AdiministradorChefe")) {
             // Mostrar todos os menus de administrador
@@ -96,14 +112,89 @@ public class MainMDIViewPresenter {
         view.getFazerLoginMenuItem().setVisible(false);
     }
     
+    private void abrirEnviarNotificacao() {
+        // Verificar se já existe uma EnviarNotificacaoView aberta
+        javax.swing.JInternalFrame[] frames = view.getDesktopPane().getAllFrames();
+        for (javax.swing.JInternalFrame frame : frames) {
+            if (frame instanceof EnviarNotificacaoView) {
+                frame.toFront();
+                try {
+                    frame.setSelected(true);
+                } catch (java.beans.PropertyVetoException e) {
+                    // Ignorar se não puder selecionar
+                }
+                return;
+            }
+        }
+        
+        EnviarNotificacaoView enviarView = new EnviarNotificacaoView();
+        new EnviarNotificacaoPresenter(
+            enviarView,
+            notificacaoRepository,
+            usuarioRepository,
+            usuarioAutenticado
+        );
+        view.getDesktopPane().add(enviarView);
+        enviarView.setVisible(true);
+        enviarView.setLocation(50, 50);
+    }
+    
+    private void abrirListarNotificacoes() {
+        // Verificar se já existe uma ListarNotificacoesView aberta
+        javax.swing.JInternalFrame[] frames = view.getDesktopPane().getAllFrames();
+        for (javax.swing.JInternalFrame frame : frames) {
+            if (frame instanceof ListarNotificacoesView) {
+                frame.toFront();
+                try {
+                    frame.setSelected(true);
+                } catch (java.beans.PropertyVetoException e) {
+                    // Ignorar se não puder selecionar
+                }
+                return;
+            }
+        }
+        
+        ListarNotificacoesView listarView = new ListarNotificacoesView();
+        new ListarNotificacoesPresenter(
+            listarView,
+            notificacaoRepository,
+            usuarioRepository,
+            usuarioAutenticado
+        );
+        view.getDesktopPane().add(listarView);
+        listarView.setVisible(true);
+        listarView.setLocation(50, 50);
+        
+        // Atualizar contador após abrir a lista
+        atualizarContadorNotificacoes();
+    }
+    
+    private void atualizarContadorNotificacoes() {
+        try {
+            int naoLidas = notificacaoRepository.contarNaoLidas(usuarioAutenticado.getId());
+            view.atualizarContadorNotificacoes(naoLidas);
+        } catch (java.sql.SQLException e) {
+            // Em caso de erro, esconder o botão
+            view.atualizarContadorNotificacoes(0);
+        }
+    }
+    
     private void abrirAlterarSenha() {
-        MainMDIView mdi = MainMDIView.getInstance(); 
-
-        AlterarSenhaView alterarSenhaView = new AlterarSenhaView();
-
-        new AlterarSenhaPresenter(alterarSenhaView, usuarioRepository, usuarioAutenticado);
-
-        mdi.getDesktopPane().add(alterarSenhaView);
-        alterarSenhaView.setVisible(true);
+        // Verificar se já existe uma AlterarSenhaView aberta
+        javax.swing.JInternalFrame[] frames = view.getDesktopPane().getAllFrames();
+        for (javax.swing.JInternalFrame frame : frames) {
+            if (frame instanceof AlterarSenhaView) {
+                frame.toFront();
+                try {
+                    frame.setSelected(true);
+                } catch (java.beans.PropertyVetoException e) {
+                    // Ignorar se não puder selecionar
+                }
+                return;
+            }
+        }
+        
+        // Criar nova AlterarSenhaView com presenter
+        view.abrirAlterarSenhaView(usuarioAutenticado);
     }
 }

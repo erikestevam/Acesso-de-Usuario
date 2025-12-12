@@ -6,7 +6,7 @@ package view;
 
 import javax.swing.JButton;
 import javax.swing.JTextField;
-import presenter.AlterarSenhaPresenter;
+// import presenter.AlterarSenhaPresenter; // Não usado diretamente nesta view
 
 /**
  *

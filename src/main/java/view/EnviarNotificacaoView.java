@@ -101,4 +101,20 @@ public class EnviarNotificacaoView extends javax.swing.JInternalFrame {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+    
+    public javax.swing.JButton getBtnEnviar() {
+        return jButton1;
+    }
+    
+    public javax.swing.JTextField getTfDestinatario() {
+        return jTextField1;
+    }
+    
+    public javax.swing.JTextArea getTaMensagem() {
+        return jTextArea1;
+    }
+    
+    public void exibirMensagem(String mensagem) {
+        javax.swing.JOptionPane.showMessageDialog(this, mensagem);
+    }
 }

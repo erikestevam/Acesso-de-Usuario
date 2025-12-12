@@ -4,9 +4,11 @@
  */
 package presenter;
 
-import com.mycompany.acessousuario.log.LogManager;
+import com.mycompany.logging.LogManager;
 import com.mycompany.acessousuario.model.Usuario;
+import com.pss.senha.validacao.ValidadorSenha;
 import java.sql.SQLException;
+import java.util.List;
 import javax.swing.JOptionPane;
 import repository.IUsuarioRepository;
 import view.AlterarSenhaView;
@@ -53,6 +55,18 @@ public class AlterarSenhaPresenter {
         
         if (!novaSenha.equals(confirmaSenha)) {
             JOptionPane.showMessageDialog(view, "A nova senha e a confirmação não coincidem.", "Erro de Validação", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // Validação de senha forte usando ValidadorSenha (RNF09 - item 7)
+        ValidadorSenha validadorSenha = new ValidadorSenha();
+        List<String> errosSenha = validadorSenha.validar(novaSenha);
+        if (!errosSenha.isEmpty()) {
+            String errosFormatados = String.join("\n", errosSenha);
+            JOptionPane.showMessageDialog(view, 
+                "Senha inválida:\n" + errosFormatados, 
+                "Erro de Validação", 
+                JOptionPane.WARNING_MESSAGE);
             return;
         }
         

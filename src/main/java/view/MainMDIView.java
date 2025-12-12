@@ -11,6 +11,7 @@ import repository.IUsuarioRepository;
 import repository.INotificacaoRepository;
 import com.mycompany.acessousuario.dao.UsuarioDAO;
 import com.mycompany.acessousuario.dao.NotificacaoDAO;
+import com.mycompany.acessousuario.model.Usuario;
 
 /**
  *
@@ -73,7 +74,13 @@ public class MainMDIView extends javax.swing.JFrame {
 
         nomeUsuario.setText("Usuario");
         desktopPane.add(nomeUsuario);
-        nomeUsuario.setBounds(10, 370, 480, 16);
+        nomeUsuario.setBounds(10, 370, 300, 16);
+        
+        btnNotificacoes = new javax.swing.JButton();
+        btnNotificacoes.setText("Notificações (0)");
+        desktopPane.add(btnNotificacoes);
+        btnNotificacoes.setBounds(320, 368, 150, 25);
+        btnNotificacoes.setVisible(false);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Usuário");
@@ -193,8 +200,35 @@ public class MainMDIView extends javax.swing.JFrame {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void alterarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarSenhaActionPerformed
-
+        abrirAlterarSenha();
     }//GEN-LAST:event_alterarSenhaActionPerformed
+    
+    private void abrirAlterarSenha() {
+        // Este método será chamado pelo MainMDIViewPresenter
+        // Verifica se já existe uma janela aberta
+        javax.swing.JInternalFrame[] frames = desktopPane.getAllFrames();
+        for (javax.swing.JInternalFrame frame : frames) {
+            if (frame instanceof AlterarSenhaView) {
+                frame.toFront();
+                try {
+                    frame.setSelected(true);
+                } catch (java.beans.PropertyVetoException e) {
+                    
+                }
+                return;
+            }
+        }
+    }
+    
+    public void abrirAlterarSenhaView(Usuario usuarioAutenticado) {
+        // Método para ser chamado pelo presenter
+        AlterarSenhaView alterarSenhaView = new AlterarSenhaView();
+        new presenter.AlterarSenhaPresenter(alterarSenhaView, usuarioRepository, usuarioAutenticado);
+        
+        desktopPane.add(alterarSenhaView);
+        alterarSenhaView.setVisible(true);
+        alterarSenhaView.setLocation(100, 100);
+    }
 
     private void cadastrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarUsuarioActionPerformed
         CadastroUsuarioView cad = new CadastroUsuarioView(usuarioRepository);
@@ -220,8 +254,33 @@ public class MainMDIView extends javax.swing.JFrame {
     }//GEN-LAST:event_listarUsuariosActionPerformed
 
     private void confgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confgActionPerformed
- 
+        abrirConfiguracao();
     }//GEN-LAST:event_confgActionPerformed
+    
+    private void abrirConfiguracao() {
+        // Verificar se já existe uma ConfiguracaoView aberta
+        javax.swing.JInternalFrame[] frames = desktopPane.getAllFrames();
+        for (javax.swing.JInternalFrame frame : frames) {
+            if (frame instanceof ConfiguracaoView) {
+                frame.toFront();
+                try {
+                    frame.setSelected(true);
+                } catch (java.beans.PropertyVetoException e) {
+                    // Ignorar se não puder selecionar
+                }
+                return;
+            }
+        }
+        
+        // Criar nova ConfiguracaoView com presenter
+        ConfiguracaoView configView = new ConfiguracaoView();
+        com.mycompany.acessousuario.dao.ConfiguracaoDAO configDAO = new com.mycompany.acessousuario.dao.ConfiguracaoDAO();
+        new presenter.ConfiguracaoPresenter(configView, configDAO);
+        
+        desktopPane.add(configView);
+        configView.setVisible(true);
+        configView.setLocation(100, 100); // Centralizar dentro do MDI
+    }
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         abrirLoginView();
@@ -264,6 +323,20 @@ public class MainMDIView extends javax.swing.JFrame {
         // Limpar rodapé
         nomeUsuario.setText("Usuario");
         
+        // Esconder botão de notificações
+        if (btnNotificacoes != null) {
+            btnNotificacoes.setVisible(false);
+        }
+        
+        // Restaurar visibilidade dos menus para estado inicial (não logado)
+        cadastrarUsuario.setVisible(true);
+        alterarSenha.setVisible(false);
+        listarUsuarios.setVisible(false);
+        jMenuItem3.setVisible(false);
+        enviarNotificacao.setVisible(false);
+        listarNotificacao.setVisible(false);
+        confgMenu.setVisible(false);
+        
         // Mostrar LoginView
         abrirLoginView();
         
@@ -275,37 +348,7 @@ public class MainMDIView extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainMDIView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainMDIView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainMDIView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainMDIView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                MainMDIView.getInstance().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem alterarSenha;
@@ -324,6 +367,7 @@ public class MainMDIView extends javax.swing.JFrame {
     private javax.swing.JMenuItem listarUsuarios;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JLabel nomeUsuario;
+    private javax.swing.JButton btnNotificacoes;
     // End of variables declaration//GEN-END:variables
 
     public JDesktopPane getDesktopPane() {
@@ -336,6 +380,18 @@ public class MainMDIView extends javax.swing.JFrame {
         jMenuItem2.setVisible(true);
         // Esconder "Controle de Usuarios" inicialmente (só aparece quando logado como admin)
         jMenuItem3.setVisible(false);
+        // Mostrar "Cadastrar Usuário" para usuários não logados
+        cadastrarUsuario.setVisible(true);
+        // Esconder menus que requerem login
+        alterarSenha.setVisible(false);
+        listarUsuarios.setVisible(false);
+        enviarNotificacao.setVisible(false);
+        listarNotificacao.setVisible(false);
+        confgMenu.setVisible(false);
+        // Esconder botão de notificações
+        if (btnNotificacoes != null) {
+            btnNotificacoes.setVisible(false);
+        }
         
         LoginView login = new LoginView(this, usuarioRepository); 
         this.desktopPane.add(login);
@@ -403,5 +459,15 @@ public class MainMDIView extends javax.swing.JFrame {
         return jMenuItem3;
     }
     
+    public javax.swing.JButton getBtnNotificacoes() {
+        return btnNotificacoes;
+    }
+    
+    public void atualizarContadorNotificacoes(int quantidade) {
+        if (btnNotificacoes != null) {
+            btnNotificacoes.setText("Notificações (" + quantidade + ")");
+            btnNotificacoes.setVisible(quantidade >= 0); // Visível quando logado (quantidade >= 0)
+        }
+    }
     
 }

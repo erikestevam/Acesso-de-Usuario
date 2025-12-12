@@ -38,7 +38,7 @@ public class ConfiguracaoView extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Formato de Log:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CSV", "JSON" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CSV", "JSONL" }));
 
         jButton1.setText("Salvar");
 
@@ -79,4 +79,16 @@ public class ConfiguracaoView extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
+    
+    public javax.swing.JButton getBtnSalvar() {
+        return jButton1;
+    }
+    
+    public javax.swing.JComboBox<String> getCbFormato() {
+        return jComboBox1;
+    }
+    
+    public void exibirMensagem(String mensagem) {
+        javax.swing.JOptionPane.showMessageDialog(this, mensagem);
+    }
 }

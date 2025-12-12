@@ -4,7 +4,7 @@
  */
 package presenter;
 
-import com.mycompany.acessousuario.log.LogManager;
+import com.mycompany.logging.LogManager;
 import com.mycompany.acessousuario.model.Usuario;
 import java.sql.SQLException;
 import java.util.List;

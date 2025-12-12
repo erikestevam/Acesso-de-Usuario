@@ -116,4 +116,24 @@ public class ListarNotificacoesView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+    
+    public javax.swing.JCheckBox getCbLida() {
+        return jCheckBox1;
+    }
+    
+    public javax.swing.JLabel getLblRemetente() {
+        return jLabel2;
+    }
+    
+    public javax.swing.JLabel getLblMensagem() {
+        return jLabel3;
+    }
+    
+    public javax.swing.JPanel getPanelNotificacao() {
+        return jPanel1;
+    }
+    
+    public void exibirMensagem(String mensagem) {
+        javax.swing.JOptionPane.showMessageDialog(this, mensagem);
+    }
 }

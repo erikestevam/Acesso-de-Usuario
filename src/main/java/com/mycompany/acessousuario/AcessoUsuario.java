@@ -2,7 +2,7 @@ package com.mycompany.acessousuario;
 
 import com.mycompany.acessousuario.dao.ConfiguracaoDAO;
 import com.mycompany.acessousuario.dao.DatabaseSetup;
-import com.mycompany.acessousuario.log.LogManager;
+import com.mycompany.logging.LogManager;
 import repository.IConfiguracaoRepository;
 import view.MainMDIView;
 import javax.swing.UIManager;
