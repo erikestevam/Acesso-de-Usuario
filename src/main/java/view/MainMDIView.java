@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/MDIApplication.java to edit this template
- */
 package view;
 
 import javax.swing.JDesktopPane;
@@ -60,7 +56,6 @@ public class MainMDIView extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         alterarSenha = new javax.swing.JMenuItem();
         cadastrarUsuario = new javax.swing.JMenuItem();
-        listarUsuarios = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
@@ -74,23 +69,12 @@ public class MainMDIView extends javax.swing.JFrame {
 
         nomeUsuario.setText("Usuario");
         desktopPane.add(nomeUsuario);
-        nomeUsuario.setBounds(10, 370, 300, 16);
-        
-        btnNotificacoes = new javax.swing.JButton();
-        btnNotificacoes.setText("Notificações (0)");
-        desktopPane.add(btnNotificacoes);
-        btnNotificacoes.setBounds(320, 368, 150, 25);
-        btnNotificacoes.setVisible(false);
+        nomeUsuario.setBounds(10, 370, 480, 16);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Usuário");
 
         jMenuItem2.setText("Fazer Login");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
         fileMenu.add(jMenuItem2);
 
         alterarSenha.setMnemonic('o');
@@ -111,16 +95,7 @@ public class MainMDIView extends javax.swing.JFrame {
         });
         fileMenu.add(cadastrarUsuario);
 
-        listarUsuarios.setText("Listar Usuários");
-        listarUsuarios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listarUsuariosActionPerformed(evt);
-            }
-        });
-        fileMenu.add(listarUsuarios);
-
         jMenuItem3.setText("Controle de Usuarios");
-        // O listener será configurado pelo MainMDIViewPresenter quando o usuário fizer login
         fileMenu.add(jMenuItem3);
 
         jMenuItem1.setText("Deslogar");
@@ -203,25 +178,28 @@ public class MainMDIView extends javax.swing.JFrame {
         abrirAlterarSenha();
     }//GEN-LAST:event_alterarSenhaActionPerformed
     
-    private void abrirAlterarSenha() {
-        // Este método será chamado pelo MainMDIViewPresenter
-        // Verifica se já existe uma janela aberta
+    private boolean focarJanelaExistente(Class<? extends javax.swing.JInternalFrame> tipoView) {
         javax.swing.JInternalFrame[] frames = desktopPane.getAllFrames();
         for (javax.swing.JInternalFrame frame : frames) {
-            if (frame instanceof AlterarSenhaView) {
+            if (tipoView.isInstance(frame)) {
                 frame.toFront();
                 try {
                     frame.setSelected(true);
                 } catch (java.beans.PropertyVetoException e) {
-                    
                 }
-                return;
+                return true;
             }
+        }
+        return false;
+    }
+    
+    private void abrirAlterarSenha() {
+        if (focarJanelaExistente(AlterarSenhaView.class)) {
+            return;
         }
     }
     
     public void abrirAlterarSenhaView(Usuario usuarioAutenticado) {
-        // Método para ser chamado pelo presenter
         AlterarSenhaView alterarSenhaView = new AlterarSenhaView();
         new presenter.AlterarSenhaPresenter(alterarSenhaView, usuarioRepository, usuarioAutenticado);
         
@@ -237,110 +215,61 @@ public class MainMDIView extends javax.swing.JFrame {
     }//GEN-LAST:event_cadastrarUsuarioActionPerformed
 
     private void listarNotificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarNotificacaoActionPerformed
-  
     }//GEN-LAST:event_listarNotificacaoActionPerformed
 
     private void enviarNotificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarNotificacaoActionPerformed
-
     }//GEN-LAST:event_enviarNotificacaoActionPerformed
-
-    private void listarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarUsuariosActionPerformed
-        // Abrir ControleUsuariosView ao invés de ListarUsuariosView
-        // Nota: precisa do usuário autenticado, então será gerenciado pelo presenter
-        // Por enquanto mantém ListarUsuariosView para compatibilidade
-        ListarUsuariosView list = new ListarUsuariosView(usuarioRepository, notificacaoRepository);
-        desktopPane.add(list);
-        list.setVisible(true);
-    }//GEN-LAST:event_listarUsuariosActionPerformed
 
     private void confgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confgActionPerformed
         abrirConfiguracao();
     }//GEN-LAST:event_confgActionPerformed
     
     private void abrirConfiguracao() {
-        // Verificar se já existe uma ConfiguracaoView aberta
-        javax.swing.JInternalFrame[] frames = desktopPane.getAllFrames();
-        for (javax.swing.JInternalFrame frame : frames) {
-            if (frame instanceof ConfiguracaoView) {
-                frame.toFront();
-                try {
-                    frame.setSelected(true);
-                } catch (java.beans.PropertyVetoException e) {
-                    // Ignorar se não puder selecionar
-                }
-                return;
-            }
+        if (focarJanelaExistente(ConfiguracaoView.class)) {
+            return;
         }
         
-        // Criar nova ConfiguracaoView com presenter
         ConfiguracaoView configView = new ConfiguracaoView();
         com.mycompany.acessousuario.dao.ConfiguracaoDAO configDAO = new com.mycompany.acessousuario.dao.ConfiguracaoDAO();
         new presenter.ConfiguracaoPresenter(configView, configDAO);
         
         desktopPane.add(configView);
         configView.setVisible(true);
-        configView.setLocation(100, 100); // Centralizar dentro do MDI
+        configView.setLocation(100, 100);
     }
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        abrirLoginView();
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
-    
-    
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         deslogar();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
     
     private void abrirLoginView() {
-        // Verificar se já existe uma LoginView aberta
-        javax.swing.JInternalFrame[] frames = desktopPane.getAllFrames();
-        for (javax.swing.JInternalFrame frame : frames) {
-            if (frame instanceof LoginView) {
-                frame.toFront();
-                try {
-                    frame.setSelected(true);
-                } catch (java.beans.PropertyVetoException e) {
-                    // Ignorar se não puder selecionar
-                }
-                return;
-            }
+        if (focarJanelaExistente(LoginView.class)) {
+            return;
         }
         
-        // Criar nova LoginView se não existir
         LoginView login = new LoginView(this, usuarioRepository);
         desktopPane.add(login);
         login.setVisible(true);
-        login.setLocation(100, 100); // Centralizar dentro do MDI
+        login.setLocation(100, 100);
     }
     
     private void deslogar() {
-        // Fechar todas as janelas internas abertas
         javax.swing.JInternalFrame[] frames = desktopPane.getAllFrames();
         for (javax.swing.JInternalFrame frame : frames) {
             frame.dispose();
         }
         
-        // Limpar rodapé
         nomeUsuario.setText("Usuario");
         
-        // Esconder botão de notificações
-        if (btnNotificacoes != null) {
-            btnNotificacoes.setVisible(false);
-        }
-        
-        // Restaurar visibilidade dos menus para estado inicial (não logado)
         cadastrarUsuario.setVisible(true);
         alterarSenha.setVisible(false);
-        listarUsuarios.setVisible(false);
         jMenuItem3.setVisible(false);
         enviarNotificacao.setVisible(false);
         listarNotificacao.setVisible(false);
         confgMenu.setVisible(false);
         
-        // Mostrar LoginView
         abrirLoginView();
         
-        // Esconder item de deslogar e mostrar "Fazer Login"
         jMenuItem1.setVisible(false);
         jMenuItem2.setVisible(true);
     }
@@ -364,10 +293,8 @@ public class MainMDIView extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem listarNotificacao;
-    private javax.swing.JMenuItem listarUsuarios;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JLabel nomeUsuario;
-    private javax.swing.JButton btnNotificacoes;
     // End of variables declaration//GEN-END:variables
 
     public JDesktopPane getDesktopPane() {
@@ -375,36 +302,26 @@ public class MainMDIView extends javax.swing.JFrame {
     }
     
     private void iniciarSistema() {
-        // Esconder deslogar e mostrar "Fazer Login" inicialmente (antes do login)
         jMenuItem1.setVisible(false);
         jMenuItem2.setVisible(true);
-        // Esconder "Controle de Usuarios" inicialmente (só aparece quando logado como admin)
         jMenuItem3.setVisible(false);
-        // Mostrar "Cadastrar Usuário" para usuários não logados
         cadastrarUsuario.setVisible(true);
-        // Esconder menus que requerem login
         alterarSenha.setVisible(false);
-        listarUsuarios.setVisible(false);
         enviarNotificacao.setVisible(false);
         listarNotificacao.setVisible(false);
         confgMenu.setVisible(false);
-        // Esconder botão de notificações
-        if (btnNotificacoes != null) {
-            btnNotificacoes.setVisible(false);
-        }
         
         LoginView login = new LoginView(this, usuarioRepository); 
         this.desktopPane.add(login);
         login.setVisible(true); 
-  
     }
     
     public javax.swing.JMenu getFileMenu() {
-        return fileMenu; // Menu "Usuário"
+        return fileMenu;
     }
 
     public javax.swing.JMenuItem getSaveAsMenuItem() {
-        return cadastrarUsuario; // Item "Cadastrar Usuário"
+        return cadastrarUsuario;
     }
     
     public void setRodapeInfo(String texto) {
@@ -442,10 +359,6 @@ public class MainMDIView extends javax.swing.JFrame {
     public JMenuItem getListarNotificacao() {
         return listarNotificacao;
     }
-
-    public JMenuItem getListarUsuarios() {
-        return listarUsuarios;
-    }
     
     public JMenuItem getDeslogarMenuItem() {
         return jMenuItem1;
@@ -457,17 +370,6 @@ public class MainMDIView extends javax.swing.JFrame {
     
     public JMenuItem getControleUsuariosMenuItem() {
         return jMenuItem3;
-    }
-    
-    public javax.swing.JButton getBtnNotificacoes() {
-        return btnNotificacoes;
-    }
-    
-    public void atualizarContadorNotificacoes(int quantidade) {
-        if (btnNotificacoes != null) {
-            btnNotificacoes.setText("Notificações (" + quantidade + ")");
-            btnNotificacoes.setVisible(quantidade >= 0); // Visível quando logado (quantidade >= 0)
-        }
     }
     
 }

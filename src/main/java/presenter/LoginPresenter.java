@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package presenter;
 
 import com.mycompany.acessousuario.model.Usuario;
@@ -25,10 +21,6 @@ public class LoginPresenter {
         this.repository = repository;
     }
     
-    public void verificarEstadoInicial() {
-        // Método mantido para compatibilidade, mas não faz nada
-        // O LoginView já é aberto diretamente no MainMDIView
-    }
     
     public void processarLogin(){
         String login = view.getLogin();

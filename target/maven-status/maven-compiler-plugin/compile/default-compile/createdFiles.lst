@@ -5,7 +5,6 @@ view\ListarNotificacoesView$1.class
 com\mycompany\acessousuario\dao\NotificacaoDAO.class
 view\MainMDIView$6.class
 view\MainMDIView$1.class
-view\ListarUsuariosView.class
 repository\IUsuarioRepository.class
 view\EnviarNotificacaoView.class
 view\MainMDIView$3.class
@@ -14,11 +13,9 @@ view\ListarNotificacoesView.class
 presenter\LoginPresenter.class
 view\MainMDIView$7.class
 view\MainMDIView$4.class
-presenter\ListarUsuariosPresenter.class
 view\LoginView$1.class
 presenter\AlterarSenhaPresenter.class
 view\ConfiguracaoView.class
-view\ListarUsuariosView$1.class
 view\MainMDIView.class
 view\AlterarSenhaView.class
 presenter\MainMDIViewPresenter.class

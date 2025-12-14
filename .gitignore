@@ -1,4 +1,3 @@
-# User Request: Ignore markdown files
 *.md
 .gitignore
 *.db

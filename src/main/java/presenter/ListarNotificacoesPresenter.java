@@ -8,7 +8,6 @@ import java.util.List;
 import repository.IUsuarioRepository;
 import repository.INotificacaoRepository;
 import view.ListarNotificacoesView;
-import view.MainMDIView;
 
 /**
  *
@@ -118,35 +117,8 @@ public class ListarNotificacoesPresenter {
         }
     }
     
-    // Métodos para navegação (podem ser adicionados botões na view depois)
-    public void proximaNotificacao() {
-        if (notificacoes != null && indiceAtual < notificacoes.size() - 1) {
-            indiceAtual++;
-            mostrarNotificacao(notificacoes.get(indiceAtual));
-        }
-    }
-    
-    public void notificacaoAnterior() {
-        if (notificacoes != null && indiceAtual > 0) {
-            indiceAtual--;
-            mostrarNotificacao(notificacoes.get(indiceAtual));
-        }
-    }
-    
-    public void atualizarLista() {
-        carregarNotificacoes();
-    }
     
     private void atualizarContadorRodape() {
-        try {
-            MainMDIView mainView = MainMDIView.getInstance();
-            if (mainView != null) {
-                int naoLidas = notificacaoRepository.contarNaoLidas(usuarioLogado.getId());
-                mainView.atualizarContadorNotificacoes(naoLidas);
-            }
-        } catch (SQLException e) {
-            // Ignorar erro ao atualizar contador
-        }
     }
 }
 

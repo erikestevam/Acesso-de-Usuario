@@ -9,7 +9,6 @@ import java.time.format.DateTimeFormatter;
 import repository.IUsuarioRepository;
 import repository.INotificacaoRepository;
 import view.EnviarNotificacaoView;
-import view.MainMDIView;
 
 /**
  *
@@ -126,17 +125,5 @@ public class EnviarNotificacaoPresenter {
         }
     }
     
-    private void atualizarContadorRodape() {
-        try {
-            MainMDIView mainView = MainMDIView.getInstance();
-            if (mainView != null) {
-                // Atualizar contador para todos os usuários logados seria complexo
-                // Por enquanto, apenas atualizamos se o remetente estiver logado
-                // O contador será atualizado quando o destinatário abrir a lista de notificações
-            }
-        } catch (Exception e) {
-            // Ignorar erro ao atualizar contador
-        }
-    }
 }
 

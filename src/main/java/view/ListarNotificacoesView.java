@@ -1,13 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
 package view;
-
-/**
- *
- * @author marqu
- */
 public class ListarNotificacoesView extends javax.swing.JInternalFrame {
 
     /**
@@ -105,7 +96,6 @@ public class ListarNotificacoesView extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
 

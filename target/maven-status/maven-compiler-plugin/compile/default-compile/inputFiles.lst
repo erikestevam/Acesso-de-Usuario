@@ -9,7 +9,6 @@ C:\Users\marke\Documents\NetBeansProjects\Acesso-de-Usuario\src\main\java\presen
 C:\Users\marke\Documents\NetBeansProjects\Acesso-de-Usuario\src\main\java\com\mycompany\acessousuario\dao\UsuarioDAO.java
 C:\Users\marke\Documents\NetBeansProjects\Acesso-de-Usuario\src\main\java\presenter\EnviarNotificacaoPresenter.java
 C:\Users\marke\Documents\NetBeansProjects\Acesso-de-Usuario\src\main\java\view\ConfiguracaoView.java
-C:\Users\marke\Documents\NetBeansProjects\Acesso-de-Usuario\src\main\java\view\ListarUsuariosView.java
 C:\Users\marke\Documents\NetBeansProjects\Acesso-de-Usuario\src\main\java\presenter\CadastroUsuarioPresenter.java
 C:\Users\marke\Documents\NetBeansProjects\Acesso-de-Usuario\src\main\java\view\CadastroUsuarioView.java
 C:\Users\marke\Documents\NetBeansProjects\Acesso-de-Usuario\src\main\java\com\mycompany\acessousuario\model\Notificacao.java
@@ -23,6 +22,5 @@ C:\Users\marke\Documents\NetBeansProjects\Acesso-de-Usuario\src\main\java\com\my
 C:\Users\marke\Documents\NetBeansProjects\Acesso-de-Usuario\src\main\java\repository\IConfiguracaoRepository.java
 C:\Users\marke\Documents\NetBeansProjects\Acesso-de-Usuario\src\main\java\view\ListarNotificacoesView.java
 C:\Users\marke\Documents\NetBeansProjects\Acesso-de-Usuario\src\main\java\presenter\ControleUsuariosPresenter.java
-C:\Users\marke\Documents\NetBeansProjects\Acesso-de-Usuario\src\main\java\presenter\ListarUsuariosPresenter.java
 C:\Users\marke\Documents\NetBeansProjects\Acesso-de-Usuario\src\main\java\view\ControleUsuariosView.java
 C:\Users\marke\Documents\NetBeansProjects\Acesso-de-Usuario\src\main\java\repository\INotificacaoRepository.java

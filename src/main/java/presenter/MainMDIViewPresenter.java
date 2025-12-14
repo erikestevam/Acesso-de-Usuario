@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package presenter;
 
 import com.mycompany.acessousuario.model.Usuario;
@@ -38,29 +34,30 @@ public class MainMDIViewPresenter {
     }
     
     private void configurarAcoesMenu() {
-        // Configurar ação do menu "Controle de Usuarios" para abrir ControleUsuariosView
         view.getControleUsuariosMenuItem().addActionListener(e -> abrirControleUsuarios());
-        // Configurar ação do menu "Enviar Notificação" para abrir EnviarNotificacaoView
         view.getEnviarNotificacao().addActionListener(e -> abrirEnviarNotificacao());
-        // Configurar ação do menu "Listar Notificações" para abrir ListarNotificacoesView
         view.getListarNotificacao().addActionListener(e -> abrirListarNotificacoes());
-        // Configurar ação do menu "Alterar Senha" para abrir AlterarSenhaView
         view.getAlterarSenha().addActionListener(e -> abrirAlterarSenha());
     }
     
-    private void abrirControleUsuarios() {
-        // Verificar se já existe uma ControleUsuariosView aberta
+    private boolean focarJanelaExistente(Class<? extends javax.swing.JInternalFrame> tipoView) {
         javax.swing.JInternalFrame[] frames = view.getDesktopPane().getAllFrames();
         for (javax.swing.JInternalFrame frame : frames) {
-            if (frame instanceof ControleUsuariosView) {
+            if (tipoView.isInstance(frame)) {
                 frame.toFront();
                 try {
                     frame.setSelected(true);
                 } catch (java.beans.PropertyVetoException e) {
-                    // Ignorar se não puder selecionar
                 }
-                return;
+                return true;
             }
+        }
+        return false;
+    }
+    
+    private void abrirControleUsuarios() {
+        if (focarJanelaExistente(ControleUsuariosView.class)) {
+            return;
         }
         
         ControleUsuariosView controleView = new ControleUsuariosView(
@@ -74,57 +71,35 @@ public class MainMDIViewPresenter {
     }
     
     private void configurarInterface() {
-        // Configura Rodapé
         String info = String.format("Usuário: %s | Perfil: %s", 
                                     usuarioAutenticado.getNome(), 
                                     usuarioAutenticado.getTipo());
         view.setRodapeInfo(info);
         
-        // Configurar botão de notificações
-        atualizarContadorNotificacoes();
-        view.getBtnNotificacoes().addActionListener(e -> abrirListarNotificacoes());
-        
-        // Configura Menus e Acessos
         JMenuItem cadastrarUsuarioItem = view.getSaveAsMenuItem();
         
-        // Mostrar "Alterar Senha" e "Listar Notificações" para todos os usuários logados
         view.getAlterarSenha().setVisible(true);
         view.getListarNotificacao().setVisible(true);
         
         if (usuarioAutenticado.getTipo().equals("Administrador") || usuarioAutenticado.getTipo().equals("AdiministradorChefe")) {
-            // Mostrar todos os menus de administrador
             cadastrarUsuarioItem.setVisible(true);
             view.getControleUsuariosMenuItem().setVisible(true);
-            view.getConfgMenu().setVisible(true); // Restaurar visibilidade do menu de configuração
-            view.getListarUsuarios().setVisible(true); // Restaurar visibilidade de listar usuários
-            view.getEnviarNotificacao().setVisible(true); // Restaurar visibilidade de enviar notificação
+            view.getConfgMenu().setVisible(true);
+            view.getEnviarNotificacao().setVisible(true);
         } else {
-            // Esconder menus de administrador para usuários comuns
             cadastrarUsuarioItem.setVisible(false);
             view.getConfgMenu().setVisible(false);
-            view.getListarUsuarios().setVisible(false);
             view.getEnviarNotificacao().setVisible(false);
             view.getControleUsuariosMenuItem().setVisible(false);
         }
         
-        // Mostrar item de deslogar e esconder "Fazer Login" quando há usuário autenticado
         view.getDeslogarMenuItem().setVisible(true);
         view.getFazerLoginMenuItem().setVisible(false);
     }
     
     private void abrirEnviarNotificacao() {
-        // Verificar se já existe uma EnviarNotificacaoView aberta
-        javax.swing.JInternalFrame[] frames = view.getDesktopPane().getAllFrames();
-        for (javax.swing.JInternalFrame frame : frames) {
-            if (frame instanceof EnviarNotificacaoView) {
-                frame.toFront();
-                try {
-                    frame.setSelected(true);
-                } catch (java.beans.PropertyVetoException e) {
-                    // Ignorar se não puder selecionar
-                }
-                return;
-            }
+        if (focarJanelaExistente(EnviarNotificacaoView.class)) {
+            return;
         }
         
         EnviarNotificacaoView enviarView = new EnviarNotificacaoView();
@@ -140,18 +115,8 @@ public class MainMDIViewPresenter {
     }
     
     private void abrirListarNotificacoes() {
-        // Verificar se já existe uma ListarNotificacoesView aberta
-        javax.swing.JInternalFrame[] frames = view.getDesktopPane().getAllFrames();
-        for (javax.swing.JInternalFrame frame : frames) {
-            if (frame instanceof ListarNotificacoesView) {
-                frame.toFront();
-                try {
-                    frame.setSelected(true);
-                } catch (java.beans.PropertyVetoException e) {
-                    // Ignorar se não puder selecionar
-                }
-                return;
-            }
+        if (focarJanelaExistente(ListarNotificacoesView.class)) {
+            return;
         }
         
         ListarNotificacoesView listarView = new ListarNotificacoesView();
@@ -164,37 +129,13 @@ public class MainMDIViewPresenter {
         view.getDesktopPane().add(listarView);
         listarView.setVisible(true);
         listarView.setLocation(50, 50);
-        
-        // Atualizar contador após abrir a lista
-        atualizarContadorNotificacoes();
-    }
-    
-    private void atualizarContadorNotificacoes() {
-        try {
-            int naoLidas = notificacaoRepository.contarNaoLidas(usuarioAutenticado.getId());
-            view.atualizarContadorNotificacoes(naoLidas);
-        } catch (java.sql.SQLException e) {
-            // Em caso de erro, esconder o botão
-            view.atualizarContadorNotificacoes(0);
-        }
     }
     
     private void abrirAlterarSenha() {
-        // Verificar se já existe uma AlterarSenhaView aberta
-        javax.swing.JInternalFrame[] frames = view.getDesktopPane().getAllFrames();
-        for (javax.swing.JInternalFrame frame : frames) {
-            if (frame instanceof AlterarSenhaView) {
-                frame.toFront();
-                try {
-                    frame.setSelected(true);
-                } catch (java.beans.PropertyVetoException e) {
-                    // Ignorar se não puder selecionar
-                }
-                return;
-            }
+        if (focarJanelaExistente(AlterarSenhaView.class)) {
+            return;
         }
         
-        // Criar nova AlterarSenhaView com presenter
         view.abrirAlterarSenhaView(usuarioAutenticado);
     }
 }
